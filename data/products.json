@@ -1,0 +1,3 @@
+{"list":[{"id":1, "description": "Shampoo Loreal", "brand": "Loreal", "price": 75.00, "stock": 20},
+          {"id":2, "description": "Acondicionador Sedal", "brand": "Sedal", "price": 120.00, "stock": 15},
+          {"id":3, "description": "Acondicionador Pantene", "brand": "Pantene", "price": 110.00, "stock": 35}]}

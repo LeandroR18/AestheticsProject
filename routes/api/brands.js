@@ -19,7 +19,7 @@ router.get('/:id', function (req, res) {
   var brand = lodash.find(data.list, function(b) {
     return b.id.toString() === id.toString();
   })
-  if(bran)
+  if(brand)
   res.json(brand);
   else
   res.status(404).send('<h1>Error 404. Not Found</h1>');
@@ -42,14 +42,19 @@ router.post('/', function(req, res) {
 
 router.delete('/:id', function (req, res) {
   var id = req.params.id;
-  var brand = lodash.remove(data.list, function(b) {
+  var brand = lodash.find(data.list, function(b) {
     return b.id.toString() === id.toString();
   })
-  if(brand)
-  res.json(brand);
-  saveData(data);
-  else
+  if(brand === undefined){
   res.status(404).send('<h1>Error 404. Not Found</h1>');
+}
+  else{
+  var brandRemove = lodash.remove(data.list, function(b){
+    return b.id.toString() === id.toString();
+  });
+  saveData(data);
+  res.json(data.list);
+}
 });
 
 module.exports = router;

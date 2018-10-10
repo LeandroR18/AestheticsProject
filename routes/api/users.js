@@ -42,14 +42,19 @@ router.post('/', function(req, res) {
 
 router.delete('/:id', function (req, res) {
   var id = req.params.id;
-  var user = lodash.remove(data.list, function(u) {
+  var user = lodash.find(data.list, function(u) {
     return u.id.toString() === id.toString();
   })
-  if(user)
-  res.json(user);
+  if(user === undefined){
+  res.status(404).send('<h1>Error 404. Not Found</h1>');
+}
+  else{
+  var userRemove = lodash.remove(data.list, function(u){
+    return u.id.toString() === id.toString();
+  });
   saveData(data);
-  else
-  res.status(404).send('<h1>Not Found</h1>');
+  res.json(data.list);
+}
 });
 
 module.exports = router;

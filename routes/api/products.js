@@ -40,16 +40,39 @@ router.post('/', function(req, res) {
   res.json(data.list);
 });
 
+router.put('/:id', function (req, res) {
+  var id = req.params.id;
+  var product = lodash.find(data.list, function (p) {
+    return p.id.toString() === id.toString();
+  });
+  if (product) {
+    product.name = req.body.name;
+    product.brand = req.body.brand;
+    product.price = req.body.price;
+    product.stock = req.body.stock;
+  }
+  else {
+    res.status(404).send('<h1> Error 404.Not Found </h1>');
+  }
+  saveData(data);
+  res.json(data.list);
+});
+
 router.delete('/:id', function (req, res) {
   var id = req.params.id;
-  var product = lodash.remove(data.list, function(item) {
-    return item.id.toString() === id.toString();
+  var product = lodash.find(data.list, function(p) {
+    return p.id.toString() === id.toString();
   })
-  if(product)
-  res.json(product);
+  if(product === undefined){
+  res.status(404).send('<h1>Error 404. Not Found</h1>');
+}
+  else{
+  var productRemove = lodash.remove(data.list, function(p){
+    return p.id.toString() === id.toString();
+  });
   saveData(data);
-  else
-  res.status(404).send('<h1>Not Found</h1>');
+  res.json(data.list);
+}
 });
 
 module.exports = router;
